@@ -5,6 +5,7 @@ import matplotlib.animation as animation
 ON = 255
 OFF = 0
 vals = [ON, OFF]
+N = None
 
 def update(frame_num, img, grid, N):
     new_grid = grid.copy()
@@ -26,7 +27,7 @@ def update(frame_num, img, grid, N):
 
 
 def main():
-    N = 100
+    side_length()
     update_int = 100
     grid = np.random.choice(vals, N*N, p=[0.2, 0.8]).reshape(N, N)
     fig, ax = plt.subplots()
@@ -35,5 +36,14 @@ def main():
                                   frames=60, interval=update_int,
                                   save_count=50)
     plt.show()
+
+
+def side_length():
+    global N
+    N = input('Enter the dimension of the side (20 - 1000): ')
+    if N not in map(str, range(20, 1001)):
+        print('Value out of range. Try one more time.')
+        side_length()
+    N = int(N)
 
 main()
