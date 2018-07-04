@@ -30,7 +30,7 @@ def update(frame_num, img, grid, old_grid, N):
     for i in range(N*N):
     # checks if the old and new table is the same
         if rounds_counter > 0:
-            if old_grid.reshape(N*N, 1)[i] == grid.reshape(N*N, 1)[i]:
+            if old_grid.reshape(N*N, 1)[i] == new_grid.reshape(N*N, 1)[i]:
                 same_counter += 1
     if same_counter == N*N and is_it_the_same is False:
         is_it_the_same = True
