@@ -5,9 +5,12 @@ import matplotlib.animation as animation
 ON = 255
 OFF = 0
 vals = [ON, OFF]
-N = None
+N = None  # side size
+is_it_the_same = False  # he makes sure that he does not check the same tables twice
+
 
 def update(frame_num, img, grid, N):
+    global is_it_the_same
     new_grid = grid.copy()
     for i in range(N):
         for j in range(N):
@@ -22,6 +25,15 @@ def update(frame_num, img, grid, N):
                 if total == 3:
                     new_grid[i, j] = ON
     img.set_data(new_grid)
+    same_counter = 0
+    for i in range(N*N):
+    # checks if the current and previous table is the same
+        if new_grid.reshape(N*N, 1)[i] == grid.reshape(N*N, 1)[i]:
+            same_counter += 1
+    if same_counter == N*N and is_it_the_same is False:
+        is_it_the_same = True
+        with open('data.txt', 'a') as data:
+            print('%sx%s,%s' %(N, N, N), file=data)
     grid[:] = new_grid[:]
     return img
 
@@ -40,8 +52,8 @@ def main():
 
 def side_length():
     global N
-    N = input('Enter the dimension of the side (20 - 1000): ')
-    if N not in map(str, range(20, 1001)):
+    N = input('Enter the dimension of the side (10 - 100): ')
+    if N not in map(str, range(10, 101)):
         print('Value out of range. Try one more time.')
         side_length()
     N = int(N)
