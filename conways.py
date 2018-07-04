@@ -8,6 +8,7 @@ vals = [ON, OFF]
 N = None  # side size
 is_it_the_same = False  # he makes sure that he does not check the same tables twice
 rounds_counter = 0
+alive = 0  # number of living cells
 
 
 def update(frame_num, img, grid, old_grid, N):
@@ -35,7 +36,8 @@ def update(frame_num, img, grid, old_grid, N):
     if same_counter == N*N and is_it_the_same is False:
         is_it_the_same = True
         with open('data.txt', 'a') as data:
-            print('%sx%s,%s' %(N, N, rounds_counter-1), file=data)
+            print('%sx%s,%s,%s:%s' % (N, N, rounds_counter-1, alive, 1-alive),
+                  file=data)
     old_grid[:] = grid[:]
     grid[:] = new_grid[:]
     rounds_counter += 1
@@ -44,8 +46,9 @@ def update(frame_num, img, grid, old_grid, N):
 
 def main():
     side_length()
+    proportion()
     update_int = 100
-    grid = np.random.choice(vals, N*N, p=[0.2, 0.8]).reshape(N, N)
+    grid = np.random.choice(vals, N*N, p=[alive, 1-alive]).reshape(N, N)
     old_grid = grid.copy()
     fig, ax = plt.subplots()
     img = ax.imshow(grid, interpolation='nearest')
@@ -55,12 +58,22 @@ def main():
     plt.show()
 
 
-def side_length():
+def side_length():  # sets side length
     global N
     N = input('Enter the dimension of the side (10 - 100): ')
     if N not in map(str, range(10, 101)):
         print('Value out of range. Try one more time.')
         side_length()
     N = int(N)
+
+
+def proportion():  # sets the proportion between living and dead cells
+    global alive
+    alive = input('''How many percent of the cells should be
+alive in the first round(recommended 20): ''')
+    if alive not in map(str, range(1, 101)):
+        print('Enter an integer from 1 to 100.')
+        proportion()
+    alive = int(alive) / 100
 
 main()
