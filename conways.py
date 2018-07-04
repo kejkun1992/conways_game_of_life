@@ -7,10 +7,11 @@ OFF = 0
 vals = [ON, OFF]
 N = None  # side size
 is_it_the_same = False  # he makes sure that he does not check the same tables twice
+rounds_counter = 0
 
 
-def update(frame_num, img, grid, N):
-    global is_it_the_same
+def update(frame_num, img, grid, old_grid, N):
+    global is_it_the_same, rounds_counter
     new_grid = grid.copy()
     for i in range(N):
         for j in range(N):
@@ -27,14 +28,17 @@ def update(frame_num, img, grid, N):
     img.set_data(new_grid)
     same_counter = 0
     for i in range(N*N):
-    # checks if the current and previous table is the same
-        if new_grid.reshape(N*N, 1)[i] == grid.reshape(N*N, 1)[i]:
-            same_counter += 1
+    # checks if the old and new table is the same
+        if rounds_counter > 0:
+            if old_grid.reshape(N*N, 1)[i] == grid.reshape(N*N, 1)[i]:
+                same_counter += 1
     if same_counter == N*N and is_it_the_same is False:
         is_it_the_same = True
         with open('data.txt', 'a') as data:
-            print('%sx%s,%s' %(N, N, N), file=data)
+            print('%sx%s,%s' %(N, N, rounds_counter-1), file=data)
+    old_grid[:] = grid[:]
     grid[:] = new_grid[:]
+    rounds_counter += 1
     return img
 
 
@@ -42,9 +46,10 @@ def main():
     side_length()
     update_int = 100
     grid = np.random.choice(vals, N*N, p=[0.2, 0.8]).reshape(N, N)
+    old_grid = grid.copy()
     fig, ax = plt.subplots()
     img = ax.imshow(grid, interpolation='nearest')
-    ani = animation.FuncAnimation(fig, update, fargs=(img, grid, N),
+    ani = animation.FuncAnimation(fig, update, fargs=(img, grid, old_grid, N),
                                   frames=60, interval=update_int,
                                   save_count=50)
     plt.show()
