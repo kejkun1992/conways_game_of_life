@@ -50,7 +50,8 @@ def average(numbers):
 
 
 def std_deviation(numbers, average):
-    pass
+    numbers = sorted(map(int, numbers))
+    return round(math.sqrt(sum([x**2 for x in numbers])/len(numbers) - average**2), 3)
 
 
 def stat(lists):
@@ -66,7 +67,7 @@ def stat(lists):
                   file =stat_n, end='\t')
             print(str(median(lists[2][i])) + '\t' + str(min(map(int, lists[2][i]))),
                   file=stat_n, end='\t')
-            print(str(max(map(int, lists[2][i]))) + '\t' + str(1),
+            print(str(max(map(int, lists[2][i]))) + '\t' + str(std_deviation(lists[2][i], average(lists[2][i]))),
                   file=stat_n)
 
 
