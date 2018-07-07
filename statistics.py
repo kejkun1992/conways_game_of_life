@@ -12,14 +12,16 @@ def value_list(data_list):
     val_list = []
     for line in data_list:
         item = line[0].split('x')[0] + ' ' + line[-1].split(':')[0]
-        print(item)
         if item not in val_list:
             val_list.append(item)
     return val_list
 
 
-def main_list(val_list):
-    pass
+def main_list(val_list, data_list):
+    for val in val_list:
+        val = val.split()
+        for line in data_list:
+            
 
-print(value_list(open_data()))
+print(main_list(value_list(open_data()), open_data()))
 input()
