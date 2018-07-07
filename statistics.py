@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
 
+import glob, os
+import math
+
+
 def open_data():
     data_list = []
     with open('data.txt') as data:
@@ -17,7 +21,7 @@ def value_list(data_list):
     return val_list
 
 
-def main_list(val_list, data_list):
+def main_lists(val_list, data_list):
     sample_list = []
     val_val_list = []
     for val in val_list:
@@ -31,8 +35,38 @@ def main_list(val_list, data_list):
         sample_list.append(samples_number)
         val_val_list.append(temp_list)
     return val_list, sample_list, val_val_list
-                
 
 
-print(main_list(value_list(open_data()), open_data()))
-input()
+def median(numbers):
+    numbers = sorted(map(int, numbers))
+    if len(numbers) % 2 == 0:
+        return int((numbers[int(len(numbers)/2-1)] + numbers[int(len(numbers)/2)]) / 2)
+    return numbers[math.ceil(len(numbers)/2)-1]
+
+
+def average(numbers):
+    pass
+
+
+def std_deviation(numbers, average):
+    pass
+
+
+def stat(lists):
+    os.chdir('statistics')
+    n = int(max([int(name.split('_')[-1].split('.')[0]) for name in glob.glob('*.txt')])) + 1
+    # gets the last report number, adds 1
+    
+    with open('stat_' + str(n) + '.txt', 'w') as stat_n:
+        print('value\tsamples_num\taverage\tmedian\tmin\tmax\tstd_deviation',
+              file=stat_n)
+        for i in range(len(lists[0])):
+            print(lists[0][i] + '\t' + str(lists[1][i]) + '\t' + str(1),
+                  file =stat_n, end='\t')
+            print(str(median(lists[2][i])) + '\t' + str(min(map(int, lists[2][i]))),
+                  file=stat_n, end='\t')
+            print(str(max(map(int, lists[2][i]))) + '\t' + str(1),
+                  file=stat_n)
+
+
+stat(main_lists(value_list(open_data()), open_data()))
