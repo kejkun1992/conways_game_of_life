@@ -18,10 +18,21 @@ def value_list(data_list):
 
 
 def main_list(val_list, data_list):
+    sample_list = []
+    val_val_list = []
     for val in val_list:
+        temp_list = []
         val = val.split()
+        samples_number = 0
         for line in data_list:
-            
+            if val[0] in line[0] and val[1] == line[-1][0:len(val[1])]:
+                samples_number += 1
+                temp_list.append(line[1])
+        sample_list.append(samples_number)
+        val_val_list.append(temp_list)
+    return val_list, sample_list, val_val_list
+                
+
 
 print(main_list(value_list(open_data()), open_data()))
 input()
