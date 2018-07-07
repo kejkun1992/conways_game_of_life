@@ -45,7 +45,8 @@ def median(numbers):
 
 
 def average(numbers):
-    pass
+    numbers = sorted(map(int, numbers))
+    return sum(numbers)/len(numbers)
 
 
 def std_deviation(numbers, average):
@@ -61,7 +62,7 @@ def stat(lists):
         print('value\tsamples_num\taverage\tmedian\tmin\tmax\tstd_deviation',
               file=stat_n)
         for i in range(len(lists[0])):
-            print(lists[0][i] + '\t' + str(lists[1][i]) + '\t' + str(1),
+            print(lists[0][i] + '\t' + str(lists[1][i]) + '\t' + str(average(lists[2][i])),
                   file =stat_n, end='\t')
             print(str(median(lists[2][i])) + '\t' + str(min(map(int, lists[2][i]))),
                   file=stat_n, end='\t')
