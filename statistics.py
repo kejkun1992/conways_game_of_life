@@ -40,7 +40,7 @@ def main_lists(val_list, data_list):
 def median(numbers):
     numbers = sorted(map(int, numbers))
     if len(numbers) % 2 == 0:
-        return int((numbers[int(len(numbers)/2-1)] + numbers[int(len(numbers)/2)]) / 2)
+        return (numbers[int(len(numbers)/2-1)] + numbers[int(len(numbers)/2)]) / 2
     return numbers[math.ceil(len(numbers)/2)-1]
 
 
@@ -60,7 +60,7 @@ def stat(lists):
     # gets the last report number, adds 1
     
     with open('stat_' + str(n) + '.txt', 'w') as stat_n:
-        print('value\tsamples_num\taverage\tmedian\tmin\tmax\tstd_deviation',
+        print('size/alive\tsamples_num\taverage\tmedian\tmin\tmax\tstd_deviation',
               file=stat_n)
         for i in range(len(lists[0])):
             print(lists[0][i] + '\t' + str(lists[1][i]) + '\t' + str(average(lists[2][i])),
