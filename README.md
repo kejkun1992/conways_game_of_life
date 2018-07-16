@@ -9,6 +9,6 @@ statistics.py:
 
 Processes data collected in data.txt. In the statistics folder, he creates a report in which he writes: size/alive, number of samples, average, median, min, max and standard deviation.
 
-conways_20x20.py
+conways_20x20.py:
 
 Demo on the 20x20 board. It does not save data.
