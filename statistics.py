@@ -4,7 +4,7 @@ import glob, os
 import math
 
 
-def open_data():
+def open_data():  # opening and preliminary data processing
     data_list = []
     with open('data.txt') as data:
         for line in data:
@@ -12,7 +12,7 @@ def open_data():
     return data_list[1::]
 
 
-def value_list(data_list):
+def value_list(data_list):  # creates processed list
     val_list = []
     for line in data_list:
         item = line[0].split('x')[0] + ' ' + line[-1].split(':')[0]
@@ -21,7 +21,7 @@ def value_list(data_list):
     return val_list
 
 
-def main_lists(val_list, data_list):
+def main_lists(val_list, data_list):  # creates processed lists
     sample_list = []
     val_val_list = []
     for val in val_list:
@@ -54,7 +54,7 @@ def std_deviation(numbers, average):
     return round(math.sqrt(sum([x**2 for x in numbers])/len(numbers) - average**2), 3)
 
 
-def stat(lists):
+def stat(lists):  # main function, it makes calculations and writes processed data
     os.chdir('statistics')
     n = int(max([int(name.split('_')[-1].split('.')[0]) for name in glob.glob('*.txt')])) + 1
     # gets the last report number, adds 1
