@@ -38,19 +38,19 @@ def main_lists(val_list, data_list):  # creates processed lists
 
 
 def median(numbers):
-    numbers = sorted(map(int, numbers))
+    numbers = sorted(map(float, numbers))
     if len(numbers) % 2 == 0:
         return (numbers[int(len(numbers)/2-1)] + numbers[int(len(numbers)/2)]) / 2
     return numbers[math.ceil(len(numbers)/2)-1]
 
 
 def average(numbers):
-    numbers = sorted(map(int, numbers))
+    numbers = sorted(map(float, numbers))
     return sum(numbers)/len(numbers)
 
 
 def std_deviation(numbers, average):
-    numbers = sorted(map(int, numbers))
+    numbers = sorted(map(float, numbers))
     return round(math.sqrt(sum([x**2 for x in numbers])/len(numbers) - average**2), 3)
 
 
@@ -65,10 +65,10 @@ def stat(lists):  # main function, it makes calculations and writes processed da
         for i in range(len(lists[0])):
             print(lists[0][i] + '\t' + str(lists[1][i]) + '\t' + str(average(lists[2][i])),
                   file =stat_n, end='\t')
-            print(str(median(lists[2][i])) + '\t' + str(min(map(int, lists[2][i]))),
+            print(str(median(lists[2][i])) + '\t' + str(min(map(float, lists[2][i]))),
                   file=stat_n, end='\t')
-            print(str(max(map(int, lists[2][i]))) + '\t' + str(std_deviation(lists[2][i], average(lists[2][i]))),
+            print(str(max(map(float, lists[2][i]))) + '\t' + str(std_deviation(lists[2][i], average(lists[2][i]))),
                   file=stat_n)
 
-
-stat(main_lists(value_list(open_data()), open_data()))
+if __name__ == '__main__':
+    stat(main_lists(value_list(open_data()), open_data()))
